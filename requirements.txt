@@ -1,0 +1,4 @@
+groq
+pytest==9.1.1
+python-dotenv
+sentences-transformer
