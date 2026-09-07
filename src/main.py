@@ -1,12 +1,27 @@
 from services.knowledge_base import load_knowledge_base
+from services.retriever import retrieve
+from services.llm import generate_response
 
 
 def main():
-    knowledge = load_knowledge_base("data/faq.txt")
+    question = "How long does a refund take?"
 
-    print("AI Customer Support Agent is starting...")
-    print("\nKnowledge base loaded successfully.")
-    print(f"Knowledge base size: {len(knowledge)} characters")
+    knowledge_base = load_knowledge_base("data/faq.txt")
+
+    relevant_sections = retrieve(
+        question,
+        knowledge_base,
+    )
+
+    context = "\n\n".join(relevant_sections)
+
+    answer = generate_response(
+        question,
+        context,
+    )
+
+    print("Customer:", question)
+    print("\nAssistant:", answer)
 
 
 if __name__ == "__main__":
