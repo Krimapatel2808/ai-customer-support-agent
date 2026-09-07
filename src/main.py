@@ -1,5 +1,5 @@
 from services.knowledge_base import load_knowledge_base
-from services.retriever import retrieve
+from services.semantic_retriever import semantic_retrieve
 from services.llm import generate_response
 
 
@@ -8,7 +8,7 @@ def main():
 
     knowledge_base = load_knowledge_base("data/faq.txt")
 
-    relevant_sections = retrieve(
+    relevant_sections = semantic_retrieve(
         question,
         knowledge_base,
     )
