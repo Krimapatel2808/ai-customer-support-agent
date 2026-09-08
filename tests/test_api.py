@@ -37,3 +37,21 @@ def test_chat_endpoint(mock_answer_question):
     mock_answer_question.assert_called_once_with(
         "Can I cancel my order?"
     )
+
+
+def test_chat_rejects_empty_message():
+    response = client.post(
+        "/chat",
+        json={"message": ""},
+    )
+
+    assert response.status_code == 422
+
+
+def test_chat_rejects_message_over_500_characters():
+    response = client.post(
+        "/chat",
+        json={"message": "a" * 501},
+    )
+
+    assert response.status_code == 422

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from src.services.agent import answer_question
 
@@ -12,7 +12,10 @@ app = FastAPI(
 
 
 class ChatRequest(BaseModel):
-    message: str
+    message: str = Field(
+        min_length=1,
+        max_length=500,
+    )
 
 
 @app.get("/health")
