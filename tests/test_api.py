@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from fastapi.testclient import TestClient
 
 from app.main import app
@@ -13,7 +15,12 @@ def test_health_check():
     assert response.json() == {"status": "healthy"}
 
 
-def test_chat_endpoint():
+@patch("app.main.answer_question")
+def test_chat_endpoint(mock_answer_question):
+    mock_answer_question.return_value = (
+        "You can cancel an order before it has shipped."
+    )
+
     response = client.post(
         "/chat",
         json={"message": "Can I cancel my order?"},
@@ -23,5 +30,10 @@ def test_chat_endpoint():
 
     data = response.json()
 
-    assert "answer" in data
-    assert data["answer"]
+    assert data["answer"] == (
+        "You can cancel an order before it has shipped."
+    )
+
+    mock_answer_question.assert_called_once_with(
+        "Can I cancel my order?"
+    )
