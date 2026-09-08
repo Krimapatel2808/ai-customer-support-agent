@@ -4,7 +4,7 @@ from services.llm import generate_response
 
 
 def main():
-    question = "How long does a refund take?"
+    question = input("Customer: ")
 
     knowledge_base = load_knowledge_base("data/faq.txt")
 
@@ -20,7 +20,7 @@ def main():
         context,
     )
 
-    print("Customer:", question)
+   
     print("\nAssistant:", answer)
 
 
