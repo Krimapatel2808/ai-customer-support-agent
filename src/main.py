@@ -12,17 +12,18 @@ def main():
         question,
         knowledge_base,
     )
+    if not relevant_sections:
+      print("\nAssistant: I don't have enough information to answer that.")
+    return
 
     context = "\n\n".join(relevant_sections)
 
     answer = generate_response(
-        question,
-        context,
-    )
+    question,
+    context,
+)
 
-   
     print("\nAssistant:", answer)
-
 
 if __name__ == "__main__":
     main()

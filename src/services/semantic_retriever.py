@@ -11,6 +11,7 @@ def semantic_retrieve(
     query: str,
     knowledge_base: str,
     top_k: int = 2,
+    threshold: float = 0.5,
 ) -> List[str]:
     sections = knowledge_base.split("\n\n")
 
@@ -24,7 +25,10 @@ def semantic_retrieve(
 
     ranked_indices = similarities.argsort()[::-1]
 
-    return [
+    relevant_sections = [
         sections[index]
         for index in ranked_indices[:top_k]
+        if similarities[index] >= threshold
     ]
+
+    return relevant_sections

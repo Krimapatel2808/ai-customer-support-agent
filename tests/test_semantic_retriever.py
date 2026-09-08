@@ -12,3 +12,13 @@ def test_semantic_retrieve_refund_information():
 
     assert len(results) > 0
     assert "REFUNDS" in results[0]
+
+def test_semantic_retrieve_rejects_irrelevant_question():
+    knowledge_base = load_knowledge_base("data/faq.txt")
+
+    results = semantic_retrieve(
+        "What is the capital of France?",
+        knowledge_base,
+    )
+
+    assert results == []
